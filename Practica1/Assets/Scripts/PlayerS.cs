@@ -26,6 +26,10 @@ public class PlayerS : MonoBehaviour
         rb.velocity = vector;
 
     }
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Diamante")
@@ -33,6 +37,11 @@ public class PlayerS : MonoBehaviour
             diamante++;
             Destroy(col.gameObject);
 
+        }
+        else if(col.gameObject.tag == "Meta")
+        {
+            PauseGame();
+            Destroy(col.gameObject);
         }
     }
 }
