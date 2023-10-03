@@ -8,6 +8,7 @@ public class PlayerS : MonoBehaviour
     public float speed = 5f;
     public float movX;
     public float movY;
+    public int diamante = 0;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,8 +22,17 @@ public class PlayerS : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Vector2 vector = new Vector2(movX * 5,movY * 5);
+        Vector2 vector = new Vector2(movX * 5, movY * 5);
         rb.velocity = vector;
 
+    }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Diamante")
+        {
+            diamante++;
+            Destroy(col.gameObject);
+
+        }
     }
 }
