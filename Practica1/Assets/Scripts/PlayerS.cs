@@ -10,13 +10,19 @@ public class PlayerS : MonoBehaviour
     public float movY;
     void Start()
     {
-        rb.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    
+
     void Update()
     {
         movX = Input.GetAxis("Horizontal");
         movY = Input.GetAxis("Vertical");
+    }
+    void FixedUpdate()
+    {
+        Vector2 vector = new Vector2(movX * 5,movY * 5);
+        rb.velocity = vector;
+
     }
 }
