@@ -2523,6 +2523,11 @@ MonoBehaviour:
   movX: 0
   movY: 0
   diamante: 0
+  canvasVictoria: {fileID: 2144993637}
+  canvasDerrota: {fileID: 2037626138}
+  timerText: {fileID: 1593979114}
+  tiempoRestante: 60
+  diamantesText: {fileID: 0}
 --- !u!1 &386543846
 GameObject:
   m_ObjectHideFlags: 0
