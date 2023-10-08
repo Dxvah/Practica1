@@ -23,7 +23,7 @@ public class PlayerS : MonoBehaviour
     public AudioSource audioVictoria;
     public AudioSource audioDerrota;
     public AudioSource audiofondo;
-   
+   public AudioSource recogerDiamante;
 
 
     
@@ -70,6 +70,7 @@ public class PlayerS : MonoBehaviour
         if (col.gameObject.tag == "Diamante")
         {
             diamante++;
+            recogerDiamante.Play();
             Destroy(col.gameObject);
             ActualizarTextoDiamantes();
             if(diamante == 0)
