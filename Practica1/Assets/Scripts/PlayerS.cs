@@ -23,7 +23,7 @@ public class PlayerS : MonoBehaviour
     public AudioSource audioVictoria;
     public AudioSource audioDerrota;
     public AudioSource audiofondo;
-    private bool sonidosMuteados = false;
+   
 
 
     
@@ -72,9 +72,9 @@ public class PlayerS : MonoBehaviour
             diamante++;
             Destroy(col.gameObject);
             ActualizarTextoDiamantes();
-            if(diamante < 4)
+            if(diamante == 0)
             {
-                cuantosDiamantes.text = "Ooooh, vaya pena. No has conseguido ningun diamante";
+                cuantosDiamantes.text = "Ooooh, vaya pena. No has conseguido ningún diamante";
             }
             else if (diamante >= 4 && diamante < diamantesTotales)
             {
@@ -116,25 +116,17 @@ public class PlayerS : MonoBehaviour
     void MostrarCanvasVictoria()
     {
         canvasVictoria.SetActive(true);
-        if (audiofondo != null && audioVictoria != null && sonidosMuteados)
-        {
-            audiofondo.UnPause();
-            audioVictoria.UnPause();
-            sonidosMuteados = false;
-        }
+        audiofondo.Pause();
+        audioVictoria.Play();
+        
         
     }
 
     void MostrarCanvasDerrota()
     {
         canvasDerrota.SetActive(true);
-        if (audiofondo != null && audioDerrota != null && sonidosMuteados)
-        {
-            audiofondo.UnPause();
-            audioDerrota.UnPause();
-            sonidosMuteados = false;
-        }
-        
+        audiofondo.Pause();
+        audioDerrota.Play();
   
     }
     private void ActualizarTextoDiamantes()
