@@ -8,6 +8,8 @@ TagManager:
   - Diamante
   - Rotatorio
   - Pinchos
+  - Star
+  - Reloj
   layers:
   - Default
   - TransparentFX

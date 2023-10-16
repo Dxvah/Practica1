@@ -23,8 +23,10 @@ public class PlayerS : MonoBehaviour
     public AudioSource audioVictoria;
     public AudioSource audioDerrota;
     public AudioSource audiofondo;
-   public AudioSource recogerDiamante;
-
+    public AudioSource recogerDiamante;
+    bool invert;
+    private Vector2 originalGravity;
+    
 
     
     void Start()
@@ -34,6 +36,8 @@ public class PlayerS : MonoBehaviour
         canvasDerrota.SetActive(false);
         p_SpriteRenderer = GetComponent<SpriteRenderer>();
         ActualizarTextoDiamantes();
+        invert = false;
+        originalGravity = new Vector2(0, -9.81f)* 5;
     }
 
 
@@ -54,6 +58,7 @@ public class PlayerS : MonoBehaviour
                 
             }
         }
+        
     }
     void FixedUpdate()
     {
@@ -77,7 +82,7 @@ public class PlayerS : MonoBehaviour
             {
                 cuantosDiamantes.text = "Ooooh, vaya pena. No has conseguido ningún diamante";
             }
-            else if (diamante >= 4 && diamante < diamantesTotales)
+            else if (diamante <= 4 && diamante < diamantesTotales)
             {
                 cuantosDiamantes.text = "¡Has terminado! Aún así, te has dejado algunos diamantes por el camino";
             }
@@ -105,22 +110,36 @@ public class PlayerS : MonoBehaviour
               Invoke("ReactivarMovimiento", 3f);
               p_SpriteRenderer.color = Color.red;
         }
+        else if(col.gameObject.tag == "Star")
+        {
+            p_SpriteRenderer.color = Color.yellow;
+            GetComponent<Collider2D>().isTrigger = true;
+            Invoke("Invencible", 3f);
+            Destroy(col.gameObject);
+;
+        }
+        if (col.gameObject.tag == "Reloj")
+        {
+            invert = true;
+            if (invert == true)
+            {
+                Physics2D.gravity = -originalGravity;
+            }
+            Invoke("Gravedad", 5f);
+            Destroy(col.gameObject);
+        }
     }
+  
     void ReactivarMovimiento()
-    {   
-    
+    {    
         GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
-        p_SpriteRenderer.color = Color.white;
-    
-    
+        p_SpriteRenderer.color = Color.white; 
     }
     void MostrarCanvasVictoria()
     {
         canvasVictoria.SetActive(true);
         audiofondo.Pause();
-        audioVictoria.Play();
-        
-        
+        audioVictoria.Play();   
     }
 
     void MostrarCanvasDerrota()
@@ -133,5 +152,15 @@ public class PlayerS : MonoBehaviour
     private void ActualizarTextoDiamantes()
     {
         nDiamantes.text = ": " + diamante + " / " + diamantesTotales;
+    }
+    private void Invencible()
+    {
+        GetComponent<Collider2D>().isTrigger = false;
+        p_SpriteRenderer.color = Color.white;
+    }
+    private void Gravedad()
+    {
+        Physics2D.gravity = originalGravity;
+        invert = false;
     }
 }
